@@ -12,6 +12,7 @@ public:
 	virtual void Update() override;
 	virtual void LateUpdate();
 	void OnCollision(GameObject* other);
+
 	
 
 	void SetTargetPaddle(Paddle* p) { paddle = p; }
@@ -24,5 +25,10 @@ private:
 
 	float screenX;
 	float screenY;
+	
+	void CheckScreenCollision();
+	void CheckPaddleCollision();
+	void CheckBrickCollision();
+	
 
 };

@@ -28,6 +28,17 @@ public:
 	// 나중에 새로운 부품을 끼워넣고 싶을 때를 위해
 	void AddComponent(Component* component);
 
+	template <typename T>
+	T* GetComponent()
+	{
+		for (auto component : components)
+		{
+			T* target = dynamic_cast<T*>(component);
+			if (target != nullptr) return target;
+		}
+		return nullptr; // 못 찾으면 꽝
+	}
+
 	bool GetActive();
 };
 

@@ -21,16 +21,18 @@ void Paddle::Initialize()
     ResourceManager& res = Scene::GetCurrentScene().GetResourceManager();
     Sprite* paddleSprite = res.LoadBitmapFromFile(L"resources/sprites/paddle.png");
     
-    
     if (this->renderer && paddleSprite)
     {
         renderer->SetSprite(paddleSprite);
     }
     
-    AddComponent(new AABBCollider(this, imageX / 2, imageY / 2));
     float sw = (float)Framework::GetInstance().GetWinApp().GetScreenWidth();
     float sh = (float)Framework::GetInstance().GetWinApp().GetScreenHeight();
     transform->position = Vector2(sw / 2.0f, sh - 50.0f);
+
+    collider  = new AABBCollider(this, imageX / 2, imageY / 2);
+
+    AddComponent(collider);
 
    
 }

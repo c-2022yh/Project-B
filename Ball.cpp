@@ -1,9 +1,12 @@
 #include "stdafx.h"
 #include "Ball.h"
+#include "Paddle.h"
 #include "Framework.h"
 #include "GameScene.h"
 #include "InputManager.h"
+#include "Collision.h"
 #include "AABBCollider.h"
+#include "CircleCollider.h"
 #include "ResourceManager.h"
 #include "TimeManager.h"
 
@@ -28,6 +31,8 @@ void Ball::Initialize()
 	{
 		renderer->SetSprite(ballSprite);
 	}
+	AddComponent(new CircleCollider(this, imageRadius));
+
 
 }
 
@@ -43,6 +48,23 @@ void Ball::LateUpdate()
 {
 	GameObject::LateUpdate();
 
+	CheckScreenCollision();
+	CheckPaddleCollision();
+	CheckBrickCollision();
+
+
+	//this->OnCollision(other);
+
+
+}
+
+void Ball::OnCollision(GameObject* other)
+{
+
+}
+
+void Ball::CheckScreenCollision()
+{
 	//º®¿¡ ´êÀ¸¸é Æ¨±â°Ô
 	if (transform->position.x < imageRadius)
 	{
@@ -65,13 +87,22 @@ void Ball::LateUpdate()
 		transform->position.y = screenY - imageRadius;
 		if (velocity.y > 0) velocity.y *= -1.0f;
 	}
+}
 
-	//this->OnCollision(other);
+void Ball::CheckPaddleCollision()
+{
+	if (paddle == nullptr) return;
+
+	AABBCollider* paddleCollider = paddle->GetCollider();
+	if (paddleCollider == nullptr) return;
+
+	Collider::Circle ballCollider(transform->position, imageRadius);
+
 
 
 }
 
-void Ball::OnCollision(GameObject* other)
+void Ball::CheckBrickCollision()
 {
 
 }
