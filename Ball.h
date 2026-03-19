@@ -4,6 +4,7 @@
 
 class Paddle;
 
+
 class Ball : public GameObject
 {
 public:
@@ -20,8 +21,8 @@ private:
 	Paddle* paddle = nullptr;
 	const float imageRadius = 8.0f;
 
-	Vector2 velocity;			// 공의 속도 (방향 + 힘)
-	float speed = 200.0f;		// 이동 속력
+	Vector2 velocity;
+	float speed = 200.0f;
 
 	float screenX;
 	float screenY;

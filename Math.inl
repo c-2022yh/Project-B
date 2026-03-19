@@ -143,3 +143,11 @@ inline void Vector2::SetVector(float x, float y)
 	this->x = x;
 	this->y = y;
 }
+
+inline void Vector2::Normalize()
+{
+	float length = sqrtf(this->DotProduct(*this));
+
+	if (length > 0.0f) *this /= length;
+
+}

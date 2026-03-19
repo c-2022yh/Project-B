@@ -30,7 +30,7 @@ void Paddle::Initialize()
     float sh = (float)Framework::GetInstance().GetWinApp().GetScreenHeight();
     transform->position = Vector2(sw / 2.0f, sh - 50.0f);
 
-    collider  = new AABBCollider(this, imageX / 2, imageY / 2);
+    collider = new AABBCollider(this, imageX / 2, imageY / 2);
 
     AddComponent(collider);
 

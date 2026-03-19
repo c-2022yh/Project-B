@@ -1,6 +1,9 @@
 #pragma once
 #include "GameObject.h"
 
+
+class AABBCollider;
+
 class Paddle : public GameObject
 {
 public:
@@ -9,8 +12,10 @@ public:
 	virtual void Initialize();
 	virtual void Update();
 	virtual void LateUpdate();
-	class AABBCollider* GetCollider() 
-	{ return (class AABBCollider*) this->collider; }
+
+	float getImageX() { return imageX; };
+	float getImageY() { return imageY; };
+
 
 private:
 	const float imageX = 120.0f;

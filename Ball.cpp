@@ -5,6 +5,7 @@
 #include "GameScene.h"
 #include "InputManager.h"
 #include "Collision.h"
+#include "Collider.h"
 #include "AABBCollider.h"
 #include "CircleCollider.h"
 #include "ResourceManager.h"
@@ -63,9 +64,9 @@ void Ball::OnCollision(GameObject* other)
 
 }
 
-void Ball::CheckScreenCollision()
+void Ball::CheckScreenCollision() //벽에 닿으면 튕기게
 {
-	//벽에 닿으면 튕기게
+	
 	if (transform->position.x < imageRadius)
 	{
 		transform->position.x = imageRadius;
@@ -89,15 +90,32 @@ void Ball::CheckScreenCollision()
 	}
 }
 
-void Ball::CheckPaddleCollision()
+void Ball::CheckPaddleCollision() //공-패들 간 충돌처리
 {
 	if (paddle == nullptr) return;
 
-	AABBCollider* paddleCollider = paddle->GetCollider();
+	AABBCollider* paddleCollider = paddle->GetComponent<AABBCollider>();
 	if (paddleCollider == nullptr) return;
 
-	Collider::Circle ballCollider(transform->position, imageRadius);
+	CircleCollider* ballCollider = GetComponent<CircleCollider>();
 
+	if (paddleCollider->Intersected(ballCollider->GetTransformedCircle()))
+	{
+		if (velocity.y > 0)
+		{
+			// 위치 보정: 패들 윗면에 딱 붙임
+			transform->position.y = paddle->transform->position.y - paddle->getImageY() / 2.0f - imageRadius;
+
+			velocity.y *= -1.0f;
+
+			// 반사각 조절 (패들 중심에서의 거리 기반)
+			float halfWidth = paddle->getImageX() * 0.5f;
+			float diff = transform->position.x - paddle->transform->position.x;
+			velocity.x = diff / halfWidth;
+			velocity.Normalize();
+			velocity *= speed;
+		}
+	}
 
 
 }
