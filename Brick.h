@@ -1,5 +1,8 @@
 #pragma once
 #include "GameObject.h"
+
+class AABBCollider;
+
 class Brick : public GameObject
 {
 public:
@@ -8,8 +11,18 @@ public:
 	virtual void Update();
 	virtual void LateUpdate();
 
+	AABBCollider* GetCollder() { return collider; }
+
+	float getImageX() const { return imageX; };
+	float getImageY() const { return imageY; };
+
+
+
 private:
-	float imageX = 60.0f;
-	float imageY = 20.0f;
+	const float imageX = 60.0f;
+	const float imageY = 20.0f;
+
+
+	AABBCollider* collider = nullptr;
 };
 

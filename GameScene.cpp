@@ -11,11 +11,11 @@ void GameScene::Initialize()
 {
 
 
-	Paddle* paddle = new Paddle();
+	paddle = new Paddle();
 	paddle->Initialize();
 	PushBackGameObject(paddle);
 
-	Ball* ball = new Ball();
+	ball = new Ball();
 	ball->Initialize();
 	ball->SetTargetPaddle(paddle);
 	PushBackGameObject(ball);   
@@ -38,3 +38,36 @@ void GameScene::Initialize()
 	}
 
 }
+void GameScene::Update()
+{
+    Scene::Update();
+
+	CheckCollision();
+}
+
+
+void GameScene::LateUpdate()
+{
+
+
+}
+
+
+void GameScene::CheckCollision()
+{
+	for (auto it = brickList.begin();it != brickList.end();)
+	{
+		if (ball->GetCollider())
+		{
+			 
+			ball->OnCollisionBrick(*it);
+
+			delete* it;
+			it = brickList.erase(it);
+		}
+		else it++;
+	}
+}
+
+
+

@@ -34,6 +34,8 @@ void Ball::Initialize()
 	}
 	AddComponent(new CircleCollider(this, imageRadius));
 
+	ballCollider = GetComponent<CircleCollider>();
+
 
 }
 
@@ -51,7 +53,6 @@ void Ball::LateUpdate()
 
 	CheckScreenCollision();
 	CheckPaddleCollision();
-	CheckBrickCollision();
 
 
 }
@@ -88,7 +89,7 @@ void Ball::CheckPaddleCollision() //공-패들 간 충돌처리
 	if (paddle == nullptr) return;
 
 	AABBCollider* paddleCollider = paddle->GetComponent<AABBCollider>();
-	CircleCollider* ballCollider = GetComponent<CircleCollider>();
+	ballCollider = GetCollider();
 
 	if (!paddleCollider || !ballCollider) return;
 
@@ -110,10 +111,9 @@ void Ball::CheckPaddleCollision() //공-패들 간 충돌처리
 			float ballCenterX = ballCollider->GetCenterOnScreen().x;
 			float halfWidth = paddleCollider->GetWidth() * 0.5f;
 
-			velocity.x = ballCenterX - paddleCenterX / halfWidth;
+			velocity.x = (ballCenterX - paddleCenterX) / halfWidth;
 
 			velocity.Normalize();
-			velocity *= speed;
 
 		}
 	}
@@ -121,7 +121,3 @@ void Ball::CheckPaddleCollision() //공-패들 간 충돌처리
 
 }
 
-void Ball::CheckBrickCollision()
-{
-
-}

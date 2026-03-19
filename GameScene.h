@@ -1,17 +1,24 @@
 #pragma once
 #include "Scene.h"
-#include "Brick.h"
+#include <vector>
 
+class Ball;
+class Brick;
+class Paddle;
 
 class GameScene :
 	public Scene
 {
 public:
-	virtual void Initialize();		//모든 Scene에는 반드시 Initialize함수가 있어야합니다. (추상 클래스 참고)
-public:
+	virtual void Initialize();
+	virtual void Update();
+	virtual void LateUpdate();
+
+	void CheckCollision();
 
 
 private:
-	std::list<Brick*> brickList;
-
+	Ball* ball = nullptr;
+	std::vector<Brick*> brickList;
+	Paddle* paddle = nullptr;
 };

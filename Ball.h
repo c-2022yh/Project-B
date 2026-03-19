@@ -3,7 +3,8 @@
 #include "math.h"
 
 class Paddle;
-
+class Brick;
+class CircleCollider;
 
 class Ball : public GameObject
 {
@@ -13,9 +14,12 @@ public:
 	virtual void Update() override;
 	virtual void LateUpdate();
 
+	CircleCollider* GetCollider() { return ballCollider; }
 	
-
 	void SetTargetPaddle(Paddle* p) { paddle = p; }
+
+	void OnCollisionBrick(Brick *b);
+
 private:
 	Paddle* paddle = nullptr;
 	const float imageRadius = 8.0f;
@@ -28,7 +32,9 @@ private:
 	
 	void CheckScreenCollision();
 	void CheckPaddleCollision();
-	void CheckBrickCollision();
+
+	CircleCollider* ballCollider = nullptr;
+
 	
 
 };
