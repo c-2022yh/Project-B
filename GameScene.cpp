@@ -45,16 +45,15 @@ void GameScene::Initialize()
 }
 void GameScene::Update()
 {
-    Scene::Update();
-
+	Scene::Update();
 	CheckCollision();
+	
 }
 
 
 void GameScene::LateUpdate()
 {
-
-
+	
 }
 
 
@@ -62,14 +61,12 @@ void GameScene::CheckCollision()
 {
 	for (auto it = brickList.begin();it != brickList.end();)
 	{
-		std::cout << "아야";
-
 		if ((*it)->GetCollider()->Intersected(ball->GetCollider()->GetTransformedCircle())) //충돌
 		{
-			std::cout << "아야";
+
 			ball->OnCollisionBrick(*it); //공 움직임 조정
-			
-			delete* it;
+
+			Scene::GetCurrentScene().Destroy(*it);
 			it = brickList.erase(it);
 		}
 		else it++;

@@ -23,7 +23,7 @@ void Brick::Initialize()
 		renderer->SetSprite(brickSprite);
 	}
 
-	collider = new AABBCollider(this, imageX / 2, imageY / 2);
+	collider = new AABBCollider(this, imageX, imageY);
 
 	AddComponent(collider);
 

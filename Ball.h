@@ -25,7 +25,7 @@ private:
 	const float imageRadius = 8.0f;
 
 	Vector2 velocity;
-	float speed = 500.0f;
+	float speed = 300.0f;
 
 	float screenX;
 	float screenY;
