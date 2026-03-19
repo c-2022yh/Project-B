@@ -4,6 +4,10 @@
 #include "Ball.h"
 #include "Brick.h"
 #include "Transform.h"
+#include "AABBCollider.h"
+#include "CIrcleCollider.h"
+
+
 
 
 
@@ -27,11 +31,12 @@ void GameScene::Initialize()
 		for (int j = 0; j < 4; j++)
 		{
 			Brick* brick = new Brick();
+			brick->transform->position = Vector2(36.0f + (i * 62.0f), 20.0f + (j * 22.0f));
+			
 			brick->Initialize();
 			PushBackGameObject(brick);
-
-			brick->transform->position = Vector2(36.0f + (i * 62.0f), 20.0f + (j * 22.0f));
 			brickList.push_back(brick);
+			
 
 		}
 		
@@ -57,11 +62,13 @@ void GameScene::CheckCollision()
 {
 	for (auto it = brickList.begin();it != brickList.end();)
 	{
-		if (ball->GetCollider())
-		{
-			 
-			ball->OnCollisionBrick(*it);
+		std::cout << "아야";
 
+		if ((*it)->GetCollider()->Intersected(ball->GetCollider()->GetTransformedCircle())) //충돌
+		{
+			std::cout << "아야";
+			ball->OnCollisionBrick(*it); //공 움직임 조정
+			
 			delete* it;
 			it = brickList.erase(it);
 		}

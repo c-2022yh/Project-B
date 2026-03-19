@@ -11,7 +11,7 @@ public:
 	virtual void Update();
 	virtual void LateUpdate();
 
-	AABBCollider* GetCollder() { return collider; }
+	AABBCollider* GetCollider() { return collider; }
 
 	float getImageX() const { return imageX; };
 	float getImageY() const { return imageY; };

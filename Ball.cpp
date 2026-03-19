@@ -57,7 +57,6 @@ void Ball::LateUpdate()
 
 }
 
-
 void Ball::CheckScreenCollision() //벽에 닿으면 튕기게
 {
 	
@@ -121,3 +120,10 @@ void Ball::CheckPaddleCollision() //공-패들 간 충돌처리
 
 }
 
+
+
+
+void Ball::OnCollisionBrick(Brick* b)
+{
+
+}

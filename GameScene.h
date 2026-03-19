@@ -10,9 +10,9 @@ class GameScene :
 	public Scene
 {
 public:
-	virtual void Initialize();
-	virtual void Update();
-	virtual void LateUpdate();
+	void Initialize();
+	void Update();
+	void LateUpdate();
 
 	void CheckCollision();
 

@@ -18,14 +18,14 @@ public:
 	
 	void SetTargetPaddle(Paddle* p) { paddle = p; }
 
-	void OnCollisionBrick(Brick *b);
+	void OnCollisionBrick(Brick* b);
 
 private:
 	Paddle* paddle = nullptr;
 	const float imageRadius = 8.0f;
 
 	Vector2 velocity;
-	float speed = 200.0f;
+	float speed = 500.0f;
 
 	float screenX;
 	float screenY;
