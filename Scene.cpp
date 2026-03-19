@@ -45,38 +45,28 @@ Scene& Scene::GetCurrentScene()
 
 void Scene::Update()
 {
-	//모든 오브젝트의 Update를 수행
+	//Update
 	for (auto& i : gameObjectList)	
 		if(i->GetActive())
 			i->Update();
 
-	//LateUpdate 수행
+	//LateUpdate
 	for (auto& i : gameObjectList)
 		if (i->GetActive())
 			i->LateUpdate();
 
-	//삭제 요청받은 오브젝트를 삭제함.
-	//for (auto i = destroyedObjectList.begin(); i != destroyedObjectList.end(); ++i)
-	//{
-	//	(*i)->OnDestroy();				//삭제시 호출될 함수
-
-	//	gameObjectList.remove(*i);		//게임오브젝트리스트에서 삭제
-	//	renderableList.remove(*i);		//렌더러블 리스트에서 삭제
-	//	SAFE_DELETE(*i);				//delete
-	//}
-	//destroyedObjectList.clear();
-	auto i = destroyedObjectList.begin();
-	while (i != destroyedObjectList.end())
+	
+	if (!destroyedObjectList.empty())
 	{
-		(*i)->OnDestroy();
-		gameObjectList.remove(*i);
-		renderableList.remove(*i);
-		GameObject* t = *i;
-		SAFE_DELETE(t);
-		destroyedObjectList.remove(*i);
-		i = destroyedObjectList.begin();
+		for (auto* obj : destroyedObjectList)
+		{
+			obj->OnDestroy();
+			gameObjectList.remove(obj);
+			renderableList.remove(obj);
+			SAFE_DELETE(obj); // 실제 메모리 해제
+		}
+		destroyedObjectList.clear();
 	}
-	destroyedObjectList.clear();
 }
 
 void Scene::Render()
@@ -95,20 +85,16 @@ void Scene::Render()
 
 GameObject* Scene::PushBackGameObject(GameObject* gameObject)
 {
-	//게임 오브젝트에 집어넣음
 	gameObjectList.push_back(gameObject);
-	//렌더러에 이미지가 있을경우
-	//렌더러블 리스트에 집어넣음
 	if (gameObject->renderer->GetInitialized())
 	{
 		renderableList.push_back(gameObject);
 	}
-	return gameObject;//받은 게임오브젝트를 그대로 반환
+	return gameObject;
 }
 
 void Scene::Destroy(GameObject* o)
 {
-	//삭제될 오브젝트 리스트에 집어넣음
 	destroyedObjectList.push_back(o);
 }
 
