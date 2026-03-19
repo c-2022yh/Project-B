@@ -12,7 +12,6 @@ public:
 	virtual void Initialize();
 	virtual void Update() override;
 	virtual void LateUpdate();
-	void OnCollision(GameObject* other);
 
 	
 

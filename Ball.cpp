@@ -54,15 +54,8 @@ void Ball::LateUpdate()
 	CheckBrickCollision();
 
 
-	//this->OnCollision(other);
-
-
 }
 
-void Ball::OnCollision(GameObject* other)
-{
-
-}
 
 void Ball::CheckScreenCollision() //벽에 닿으면 튕기게
 {
@@ -95,25 +88,33 @@ void Ball::CheckPaddleCollision() //공-패들 간 충돌처리
 	if (paddle == nullptr) return;
 
 	AABBCollider* paddleCollider = paddle->GetComponent<AABBCollider>();
-	if (paddleCollider == nullptr) return;
-
 	CircleCollider* ballCollider = GetComponent<CircleCollider>();
+
+	if (!paddleCollider || !ballCollider) return;
 
 	if (paddleCollider->Intersected(ballCollider->GetTransformedCircle()))
 	{
 		if (velocity.y > 0)
 		{
 			// 위치 보정: 패들 윗면에 딱 붙임
-			transform->position.y = paddle->transform->position.y - paddle->getImageY() / 2.0f - imageRadius;
+
+			float paddleTopY = paddleCollider->GetTopOnScreen();
+
+			float ballHeight = ballCollider->GetTransformedCircle().radius * 2.0f;
+			transform->position.y = paddleTopY - ballHeight - 1.0f;
 
 			velocity.y *= -1.0f;
 
 			// 반사각 조절 (패들 중심에서의 거리 기반)
-			float halfWidth = paddle->getImageX() * 0.5f;
-			float diff = transform->position.x - paddle->transform->position.x;
-			velocity.x = diff / halfWidth;
+			float paddleCenterX = paddleCollider->GetCenterOnScreen().x;
+			float ballCenterX = ballCollider->GetCenterOnScreen().x;
+			float halfWidth = paddleCollider->GetWidth() * 0.5f;
+
+			velocity.x = ballCenterX - paddleCenterX / halfWidth;
+
 			velocity.Normalize();
 			velocity *= speed;
+
 		}
 	}
 
